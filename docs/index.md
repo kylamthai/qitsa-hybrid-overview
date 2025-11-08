@@ -1,5 +1,3 @@
-**Tên dự án**: QITSA (Quantum-Inspired Text Sentiment Analysis)
-
 # 📘 QITSA Documentation
 
 Chào mừng bạn đến với tài liệu QITSA.
