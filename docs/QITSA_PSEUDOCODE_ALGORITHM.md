@@ -1,11 +1,5 @@
 # QITSA Forward Pass - Giải Thuật Mã Giả (Pseudocode)
 
-**Tác giả**: Principal NLP/AI/ML Developer  
-**Ngày**: 11/11/2025  
-**Mục đích**: Tài liệu hóa core algorithm của QITSA (Quantum-Inspired Text Sentiment Analysis)
-
----
-
 ## Tổng Quan
 
 Giải thuật này mô tả **pipeline forward pass** của model QITSA - đoạn xử lý quan trọng nhất kết hợp:
