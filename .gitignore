@@ -1,0 +1,13 @@
+# Puppeteer configuration (local setup)
+puppeteer-config.json
+
+# Backup files
+*.bak
+
+# Node modules (if any)
+node_modules/
+
+# Generated files that can be regenerated
+# (uncommenting these would prevent committing the generated PNGs)
+# docs/pipeline-overview.png
+# docs/pipeline-overview@2x.png
