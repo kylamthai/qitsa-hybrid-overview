@@ -1,0 +1,48 @@
+%% QITSA Overall Pipeline (Offline + Realtime)
+%% Save as: docs/pipeline-overview.mmd
+%% Generate PNG (example):
+%% mmdc -i docs/pipeline-overview.mmd -o docs/pipeline-overview.png --scale 1
+
+flowchart TB
+    %% ================= OFFLINE / TRAINING =================
+    subgraph OFF[Indexing / Training Process - Offline]
+        A[Raw Datasets\nCR / MR / SST / SUBJ / MPQA (TSV)] --> B[Preprocessing\nTokenize • Lowercase • Clean]
+        B --> C[Word→Index Mapping\n(vocab build, UNK, PAD)]
+        C --> D[Sentiment Scores per Token\nSentiWordNet aggregation]
+        D --> E[Batch & Padding\npad_sentence_plus]
+        E --> F[Hybrid Embedding Init\nReal + Imag matrices]
+        F --> G[Quantum Transform Stack\nprojection_Euler × num_layers]
+        G --> H[(Optional) CNN n-gram Feature Bank\nkernels 3/4/5]
+        H --> I[Quantum Measurement |ψ|²\n(real² + imag² fusion)]
+        I --> J[Classifier + Sigmoid\n(Output Dim = 1)]
+        J --> K[Metrics & Loss\nBCE, Accuracy]
+        K --> L{Improved?}
+        L -->|Yes| M[Save Checkpoint\nbest_model_*.pt]
+        L -->|No| N[Continue Epoch Loop]
+        K --> O[Visualization\nLoss_*.png • Acc_*.png]
+        A --> P[Corpus Stats\nLength dist • OOV rate]
+        F -. cache .-> Q[(Embedding Store)]
+        M --> R[(Model Registry / Checkpoints)]
+    end
+
+    %% ================= REALTIME / INFERENCE =================
+    subgraph RT[Querying / Inference Process - Realtime]
+        U[User Sentence] --> V[Preprocess\nTokenize • Lowercase]
+        V --> W[Map to Indices\n(use training vocab)]
+        W --> X[Load Sentiment Scores Cache]
+        X --> Y[Load Real + Imag Embeddings\n(from store + checkpoint)]
+        Y --> Z[Quantum Layers\nprojection_Euler stack]
+        Z --> ZA[(Optional) CNN Feature Extraction]
+        ZA --> ZB[Measurement + Fusion]
+        ZB --> ZC[Sigmoid Output\nScore ∈ (0,1)]
+        ZC --> ZD{Need Explainability?}
+        ZD -->|Yes| ZE[Visualization\nToken contributions • Phase amplitudes]
+        ZD -->|No| ZF[Return Label + Score]
+        ZE --> ZF
+        R --> Y
+        Q --> Y
+    end
+
+    %% Style classes
+    classDef store fill=#f8f8ff,stroke=#666,stroke-width:1px;
+    class Q,R store;
