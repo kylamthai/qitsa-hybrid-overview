@@ -5,44 +5,44 @@
 
 flowchart TB
     %% ================= OFFLINE / TRAINING =================
-    subgraph OFF[Indexing / Training Process - Offline]
-        A[Raw Datasets\nCR / MR / SST / SUBJ / MPQA (TSV)] --> B[Preprocessing\nTokenize • Lowercase • Clean]
-        B --> C[Word→Index Mapping\n(vocab build, UNK, PAD)]
-        C --> D[Sentiment Scores per Token\nSentiWordNet aggregation]
-        D --> E[Batch & Padding\npad_sentence_plus]
-        E --> F[Hybrid Embedding Init\nReal + Imag matrices]
-        F --> G[Quantum Transform Stack\nprojection_Euler × num_layers]
-        G --> H[(Optional) CNN n-gram Feature Bank\nkernels 3/4/5]
-        H --> I[Quantum Measurement |ψ|²\n(real² + imag² fusion)]
-        I --> J[Classifier + Sigmoid\n(Output Dim = 1)]
-        J --> K[Metrics & Loss\nBCE, Accuracy]
-        K --> L{Improved?}
-        L -->|Yes| M[Save Checkpoint\nbest_model_*.pt]
-        L -->|No| N[Continue Epoch Loop]
-        K --> O[Visualization\nLoss_*.png • Acc_*.png]
-        A --> P[Corpus Stats\nLength dist • OOV rate]
-        F -. cache .-> Q[(Embedding Store)]
-        M --> R[(Model Registry / Checkpoints)]
+    subgraph OFF["fa:fa-cogs Indexing / Training Process - Offline"]
+        A["fa:fa-database Raw Datasets\nCR / MR / SST / SUBJ / MPQA (TSV)"] --> B["fa:fa-filter Preprocessing\nTokenize • Lowercase • Clean"]
+        B --> C["fa:fa-book Word→Index Mapping\n(vocab build, UNK, PAD)"]
+        C --> D["fa:fa-smile Sentiment Scores per Token\nSentiWordNet aggregation"]
+        D --> E["fa:fa-bars Batch & Padding\npad_sentence_plus"]
+        E --> F["fa:fa-layer-group Hybrid Embedding Init\nReal + Imag matrices"]
+        F --> G["fa:fa-atom Quantum Transform Stack\nprojection_Euler × num_layers"]
+        G --> H["fa:fa-cube (Optional) CNN n-gram Feature Bank\nkernels 3/4/5"]
+        H --> I["fa:fa-wave-square Quantum Measurement |ψ|²\n(real² + imag² fusion)"]
+        I --> J["fa:fa-brain Classifier + Sigmoid\n(Output Dim = 1)"]
+        J --> K["fa:fa-chart-line Metrics & Loss\nBCE, Accuracy"]
+        K --> L{"fa:fa-question Improved?"}
+        L -->|Yes| M["fa:fa-save Save Checkpoint\nbest_model_*.pt"]
+        L -->|No| N["fa:fa-redo Continue Epoch Loop"]
+        K --> O["fa:fa-chart-bar Visualization\nLoss_*.png • Acc_*.png"]
+        A --> P["fa:fa-chart-area Corpus Stats\nLength dist • OOV rate"]
+        F -. cache .-> Q[("fa:fa-hdd Embedding Store")]
+        M --> R[("fa:fa-archive Model Registry / Checkpoints")]
     end
 
     %% ================= REALTIME / INFERENCE =================
-    subgraph RT[Querying / Inference Process - Realtime]
-        U[User Sentence] --> V[Preprocess\nTokenize • Lowercase]
-        V --> W[Map to Indices\n(use training vocab)]
-        W --> X[Load Sentiment Scores Cache]
-        X --> Y[Load Real + Imag Embeddings\n(from store + checkpoint)]
-        Y --> Z[Quantum Layers\nprojection_Euler stack]
-        Z --> ZA[(Optional) CNN Feature Extraction]
-        ZA --> ZB[Measurement + Fusion]
-        ZB --> ZC[Sigmoid Output\nScore ∈ (0,1)]
-        ZC --> ZD{Need Explainability?}
-        ZD -->|Yes| ZE[Visualization\nToken contributions • Phase amplitudes]
-        ZD -->|No| ZF[Return Label + Score]
+    subgraph RT["fa:fa-bolt Querying / Inference Process - Realtime"]
+        U["fa:fa-user User Sentence"] --> V["fa:fa-filter Preprocess\nTokenize • Lowercase"]
+        V --> W["fa:fa-list-ol Map to Indices\n(use training vocab)"]
+        W --> X["fa:fa-smile Load Sentiment Scores Cache"]
+        X --> Y["fa:fa-layer-group Load Real + Imag Embeddings\n(from store + checkpoint)"]
+        Y --> Z["fa:fa-atom Quantum Layers\nprojection_Euler stack"]
+        Z --> ZA["fa:fa-cube (Optional) CNN Feature Extraction"]
+        ZA --> ZB["fa:fa-wave-square Measurement + Fusion"]
+        ZB --> ZC["fa:fa-calculator Sigmoid Output\nScore ∈ (0,1)"]
+        ZC --> ZD{"fa:fa-question Need Explainability?"}
+        ZD -->|Yes| ZE["fa:fa-eye Visualization\nToken contributions • Phase amplitudes"]
+        ZD -->|No| ZF["fa:fa-check-circle Return Label + Score"]
         ZE --> ZF
         R --> Y
         Q --> Y
     end
 
     %% Style classes
-    classDef store fill=#f8f8ff,stroke=#666,stroke-width:1px;
+    classDef store fill:#f8f8ff,stroke:#666,stroke-width:1px;
     class Q,R store;
